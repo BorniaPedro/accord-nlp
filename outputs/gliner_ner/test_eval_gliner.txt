@@ -1,0 +1,30 @@
+Default classification report:
+              precision    recall  f1-score   support
+
+      object     0.7139    0.7792    0.7451       317
+    property     0.7079    0.6429    0.6738        98
+     quality     0.5636    0.4890    0.5236       317
+       value     0.7500    0.8750    0.8077        48
+
+   micro avg     0.6619    0.6500    0.6559       780
+   macro avg     0.6838    0.6965    0.6876       780
+weighted avg     0.6543    0.6500    0.6500       780
+
+Strict classification report:
+              precision    recall  f1-score   support
+
+      object     0.7139    0.7792    0.7451       317
+    property     0.7079    0.6429    0.6738        98
+     quality     0.5636    0.4890    0.5236       317
+       value     0.7500    0.8750    0.8077        48
+
+   micro avg     0.6619    0.6500    0.6559       780
+   macro avg     0.6838    0.6965    0.6876       780
+weighted avg     0.6543    0.6500    0.6500       780
+
+precision(macro) = 0.6838435911364079
+recall(macro) = 0.6964989860297431
+f1_score(macro) = 0.6875589467501232
+precision_strict(macro) = 0.6838435911364079
+recall_strict(macro) = 0.6964989860297431
+f1_score_strict(macro) = 0.6875589467501232

@@ -1,0 +1,6 @@
+NER Engine: gliner
+Ontology Filter: True
+Micro F1: 0.2057
+Macro F1: 0.2458
+Macro Precision: 0.1686
+Macro Recall: 0.5437
