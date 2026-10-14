@@ -1,0 +1,382 @@
+[
+  {
+    "sentence": "The clear opening width of a fire exit door should not exceed 1,200 mm unless a double leaf door is provided .",
+    "entities": [
+      {"text": "clear", "label": "quality"},
+      {"text": "opening width", "label": "property"},
+      {"text": "fire exit door", "label": "object"},
+      {"text": "1,200 mm", "label": "value"}
+    ],
+    "relations": [
+      {"head": "opening width", "tail": "1,200 mm", "relation": "less-equal"},
+      {"head": "opening width", "tail": "fire exit door", "relation": "part-of"},
+      {"head": "clear", "tail": "opening width", "relation": "selection"}
+    ]
+  },
+  {
+    "sentence": "The thickness of the insulation layer in a flat roof must be less than 150 mm to allow for correct drainage falls .",
+    "entities": [
+      {"text": "thickness", "label": "property"},
+      {"text": "insulation layer", "label": "object"},
+      {"text": "flat roof", "label": "object"},
+      {"text": "150 mm", "label": "value"}
+    ],
+    "relations": [
+      {"head": "thickness", "tail": "150 mm", "relation": "less"},
+      {"head": "thickness", "tail": "insulation layer", "relation": "part-of"},
+      {"head": "insulation layer", "tail": "flat roof", "relation": "part-of"}
+    ]
+  },
+  {
+    "sentence": "The maximum travel distance to the nearest storey exit in a single stair building should be up to 18 metres .",
+    "entities": [
+      {"text": "maximum", "label": "quality"},
+      {"text": "travel distance", "label": "property"},
+      {"text": "storey exit", "label": "object"},
+      {"text": "18 metres", "label": "value"}
+    ],
+    "relations": [
+      {"head": "travel distance", "tail": "18 metres", "relation": "less-equal"},
+      {"head": "travel distance", "tail": "storey exit", "relation": "part-of"},
+      {"head": "maximum", "tail": "travel distance", "relation": "selection"}
+    ]
+  },
+  {
+    "sentence": "Where the floor area of a habitable room exceeds 50 m2 , a mechanical ventilation system shall be installed .",
+    "entities": [
+      {"text": "floor area", "label": "property"},
+      {"text": "habitable room", "label": "object"},
+      {"text": "50 m2", "label": "value"},
+      {"text": "mechanical", "label": "quality"},
+      {"text": "ventilation system", "label": "object"}
+    ],
+    "relations": [
+      {"head": "floor area", "tail": "50 m2", "relation": "greater"},
+      {"head": "floor area", "tail": "habitable room", "relation": "part-of"},
+      {"head": "habitable room", "tail": "ventilation system", "relation": "necessity"},
+      {"head": "mechanical", "tail": "ventilation system", "selection": "selection", "relation": "selection"}
+    ]
+  },
+  {
+    "sentence": "The gap between the balusters of a guarding must be less than 100 mm so that a child cannot pass through .",
+    "entities": [
+      {"text": "gap", "label": "property"},
+      {"text": "balusters", "label": "object"},
+      {"text": "guarding", "label": "object"},
+      {"text": "100 mm", "label": "value"}
+    ],
+    "relations": [
+      {"head": "gap", "tail": "100 mm", "relation": "less"},
+      {"head": "gap", "tail": "balusters", "relation": "part-of"},
+      {"head": "balusters", "tail": "guarding", "relation": "part-of"}
+    ]
+  },
+  {
+    "sentence": "The fire resistance rating of a compartment wall shall be equal to 60 minutes for buildings with a top storey height below 18 m .",
+    "entities": [
+      {"text": "fire resistance rating", "label": "property"},
+      {"text": "compartment wall", "label": "object"},
+      {"text": "60 minutes", "label": "value"},
+      {"text": "buildings", "label": "object"},
+      {"text": "top storey height", "label": "property"},
+      {"text": "18 m", "label": "value"}
+    ],
+    "relations": [
+      {"head": "fire resistance rating", "tail": "60 minutes", "relation": "equal"},
+      {"head": "fire resistance rating", "tail": "compartment wall", "relation": "part-of"},
+      {"head": "top storey height", "tail": "18 m", "relation": "less"},
+      {"head": "buildings", "tail": "top storey height", "relation": "part-of"}
+    ]
+  },
+  {
+    "sentence": "The rise of each step in a private stair should not be greater than 220 mm and the going should be at least 220 mm .",
+    "entities": [
+      {"text": "rise", "label": "property"},
+      {"text": "step", "label": "object"},
+      {"text": "private", "label": "quality"},
+      {"text": "stair", "label": "object"},
+      {"text": "220 mm", "label": "value"}
+    ],
+    "relations": [
+      {"head": "rise", "tail": "220 mm", "relation": "less-equal"},
+      {"head": "rise", "tail": "step", "relation": "part-of"},
+      {"head": "step", "tail": "stair", "relation": "part-of"},
+      {"head": "private", "tail": "stair", "relation": "selection"}
+    ]
+  },
+  {
+    "sentence": "The U-value of an external wall in a new dwelling must not be more than 0.18 W/m2K to limit heat loss .",
+    "entities": [
+      {"text": "U-value", "label": "property"},
+      {"text": "external wall", "label": "object"},
+      {"text": "dwelling", "label": "object"},
+      {"text": "0.18 W/m2K", "label": "value"}
+    ],
+    "relations": [
+      {"head": "U-value", "tail": "0.18 W/m2K", "relation": "less-equal"},
+      {"head": "U-value", "tail": "external wall", "relation": "part-of"},
+      {"head": "external wall", "tail": "dwelling", "relation": "part-of"}
+    ]
+  },
+  {
+    "sentence": "In a protected corridor , the width of the escape route shall be greater than 1,000 mm where more than 50 persons may use it .",
+    "entities": [
+      {"text": "protected", "label": "quality"},
+      {"text": "corridor", "label": "object"},
+      {"text": "width", "label": "property"},
+      {"text": "escape route", "label": "object"},
+      {"text": "1,000 mm", "label": "value"}
+    ],
+    "relations": [
+      {"head": "width", "tail": "1,000 mm", "relation": "greater"},
+      {"head": "width", "tail": "escape route", "relation": "part-of"},
+      {"head": "escape route", "tail": "corridor", "relation": "part-of"},
+      {"head": "protected", "tail": "corridor", "relation": "selection"}
+    ]
+  },
+  {
+    "sentence": "The height of a handrail above the pitch line of a stair must be equal to 900 mm in any dwelling .",
+    "entities": [
+      {"text": "height", "label": "property"},
+      {"text": "handrail", "label": "object"},
+      {"text": "stair", "label": "object"},
+      {"text": "900 mm", "label": "value"},
+      {"text": "dwelling", "label": "object"}
+    ],
+    "relations": [
+      {"head": "height", "tail": "900 mm", "relation": "equal"},
+      {"head": "height", "tail": "handrail", "relation": "part-of"},
+      {"head": "handrail", "tail": "stair", "relation": "part-of"},
+      {"head": "dwelling", "tail": "stair", "relation": "part-of"}
+    ]
+  },
+  {
+    "sentence": "The air permeability of a building envelope shall not exceed 8 m3/h.m2 at a test pressure of 50 Pa .",
+    "entities": [
+      {"text": "air permeability", "label": "property"},
+      {"text": "building envelope", "label": "object"},
+      {"text": "8 m3/h.m2", "label": "value"}
+    ],
+    "relations": [
+      {"head": "air permeability", "tail": "8 m3/h.m2", "relation": "less-equal"},
+      {"head": "air permeability", "tail": "building envelope", "relation": "part-of"}
+    ]
+  },
+  {
+    "sentence": "The cavity width between the outer leaf and the inner leaf of a masonry wall should be less than 75 mm unless wall ties are specially designed .",
+    "entities": [
+      {"text": "cavity width", "label": "property"},
+      {"text": "outer leaf", "label": "object"},
+      {"text": "inner leaf", "label": "object"},
+      {"text": "masonry wall", "label": "object"},
+      {"text": "75 mm", "label": "value"}
+    ],
+    "relations": [
+      {"head": "cavity width", "tail": "75 mm", "relation": "less"},
+      {"head": "cavity width", "tail": "masonry wall", "relation": "part-of"},
+      {"head": "outer leaf", "tail": "masonry wall", "relation": "part-of"},
+      {"head": "inner leaf", "tail": "masonry wall", "relation": "part-of"}
+    ]
+  },
+  {
+    "sentence": "The area of an automatic opening vent in a smoke shaft must be at least 1 m2 and its free area must not exceed 3 m2 .",
+    "entities": [
+      {"text": "area", "label": "property"},
+      {"text": "automatic", "label": "quality"},
+      {"text": "opening vent", "label": "object"},
+      {"text": "smoke shaft", "label": "object"},
+      {"text": "1 m2", "label": "value"},
+      {"text": "free", "label": "quality"},
+      {"text": "3 m2", "label": "value"}
+    ],
+    "relations": [
+      {"head": "area", "tail": "1 m2", "relation": "greater-equal"},
+      {"head": "area", "tail": "3 m2", "relation": "less-equal"},
+      {"head": "area", "tail": "opening vent", "relation": "part-of"},
+      {"head": "opening vent", "tail": "smoke shaft", "relation": "part-of"},
+      {"head": "automatic", "tail": "opening vent", "relation": "selection"},
+      {"head": "free", "tail": "area", "relation": "selection"}
+    ]
+  },
+  {
+    "sentence": "The sound insulation of a separating floor between two flats shall achieve an airborne value of no more than 45 dB in the test result .",
+    "entities": [
+      {"text": "sound insulation", "label": "property"},
+      {"text": "separating floor", "label": "object"},
+      {"text": "flats", "label": "object"},
+      {"text": "45 dB", "label": "value"}
+    ],
+    "relations": [
+      {"head": "sound insulation", "tail": "45 dB", "relation": "less-equal"},
+      {"head": "sound insulation", "tail": "separating floor", "relation": "part-of"},
+      {"head": "separating floor", "tail": "flats", "relation": "part-of"}
+    ]
+  },
+  {
+    "sentence": "The slope of an accessible ramp should be under 1:15 and the landing length at the top must be exactly 1,200 mm .",
+    "entities": [
+      {"text": "slope", "label": "property"},
+      {"text": "accessible", "label": "quality"},
+      {"text": "ramp", "label": "object"},
+      {"text": "1:15", "label": "value"},
+      {"text": "landing length", "label": "property"},
+      {"text": "1,200 mm", "label": "value"}
+    ],
+    "relations": [
+      {"head": "slope", "tail": "1:15", "relation": "less"},
+      {"head": "landing length", "tail": "1,200 mm", "relation": "equal"},
+      {"head": "slope", "tail": "ramp", "relation": "part-of"},
+      {"head": "landing length", "tail": "ramp", "relation": "part-of"},
+      {"head": "accessible", "tail": "ramp", "relation": "selection"}
+    ]
+  },
+  {
+    "sentence": "Where a fire damper is installed in a ventilation duct , the leakage rate shall be less than 10 litres per second .",
+    "entities": [
+      {"text": "fire damper", "label": "object"},
+      {"text": "ventilation duct", "label": "object"},
+      {"text": "leakage rate", "label": "property"},
+      {"text": "10 litres per second", "label": "value"}
+    ],
+    "relations": [
+      {"head": "leakage rate", "tail": "10 litres per second", "relation": "less"},
+      {"head": "leakage rate", "tail": "fire damper", "relation": "part-of"},
+      {"head": "fire damper", "tail": "ventilation duct", "relation": "part-of"}
+    ]
+  },
+  {
+    "sentence": "In any habitable room , the glazed area of a window must not exceed 40 % of the external wall area .",
+    "entities": [
+      {"text": "habitable room", "label": "object"},
+      {"text": "glazed area", "label": "property"},
+      {"text": "window", "label": "object"},
+      {"text": "40 %", "label": "value"}
+    ],
+    "relations": [
+      {"head": "glazed area", "tail": "40 %", "relation": "less-equal"},
+      {"head": "glazed area", "tail": "window", "relation": "part-of"},
+      {"head": "window", "tail": "habitable room", "relation": "part-of"}
+    ]
+  },
+  {
+    "sentence": "No stair in a dwelling shall have a riser height greater than 220 mm , and the pitch must stay below 42 degrees .",
+    "entities": [
+      {"text": "stair", "label": "object"},
+      {"text": "dwelling", "label": "object"},
+      {"text": "riser height", "label": "property"},
+      {"text": "220 mm", "label": "value"},
+      {"text": "pitch", "label": "property"},
+      {"text": "42 degrees", "label": "value"}
+    ],
+    "relations": [
+      {"head": "riser height", "tail": "220 mm", "relation": "less-equal"},
+      {"head": "pitch", "tail": "42 degrees", "relation": "less"},
+      {"head": "riser height", "tail": "stair", "relation": "part-of"},
+      {"head": "pitch", "tail": "stair", "relation": "part-of"},
+      {"head": "stair", "tail": "dwelling", "relation": "part-of"}
+    ]
+  },
+  {
+    "sentence": "Unless equipped with a sprinkler system , a compartment shall have a floor area strictly under 2,000 m2 .",
+    "entities": [
+      {"text": "sprinkler system", "label": "object"},
+      {"text": "compartment", "label": "object"},
+      {"text": "floor area", "label": "property"},
+      {"text": "2,000 m2", "label": "value"}
+    ],
+    "relations": [
+      {"head": "floor area", "tail": "2,000 m2", "relation": "less"},
+      {"head": "floor area", "tail": "compartment", "relation": "part-of"},
+      {"head": "compartment", "tail": "sprinkler system", "relation": "necessity"}
+    ]
+  },
+  {
+    "sentence": "If the travel distance in an open-plan office exceeds 25 metres , additional escape stairs shall be provided .",
+    "entities": [
+      {"text": "travel distance", "label": "property"},
+      {"text": "open-plan office", "label": "object"},
+      {"text": "25 metres", "label": "value"},
+      {"text": "escape stairs", "label": "object"}
+    ],
+    "relations": [
+      {"head": "travel distance", "tail": "25 metres", "relation": "greater"},
+      {"head": "travel distance", "tail": "open-plan office", "relation": "part-of"},
+      {"head": "open-plan office", "tail": "escape stairs", "relation": "necessity"}
+    ]
+  },
+  {
+    "sentence": "For all external walls of residential buildings , thermal transmittance shall not be more than 0.30 W/m2K .",
+    "entities": [
+      {"text": "external walls", "label": "object"},
+      {"text": "residential buildings", "label": "object"},
+      {"text": "thermal transmittance", "label": "property"},
+      {"text": "0.30 W/m2K", "label": "value"}
+    ],
+    "relations": [
+      {"head": "thermal transmittance", "tail": "0.30 W/m2K", "relation": "less-equal"},
+      {"head": "thermal transmittance", "tail": "external walls", "relation": "part-of"},
+      {"head": "external walls", "tail": "residential buildings", "relation": "part-of"}
+    ]
+  },
+  {
+    "sentence": "Where a handrail is fitted to a ramp , the projection into the clear width must be at most 100 mm .",
+    "entities": [
+      {"text": "handrail", "label": "object"},
+      {"text": "ramp", "label": "object"},
+      {"text": "projection", "label": "property"},
+      {"text": "100 mm", "label": "value"}
+    ],
+    "relations": [
+      {"head": "projection", "tail": "100 mm", "relation": "less-equal"},
+      {"head": "projection", "tail": "handrail", "relation": "part-of"},
+      {"head": "handrail", "tail": "ramp", "relation": "part-of"}
+    ]
+  },
+  {
+    "sentence": "In every protected stairway , the pressure differential must remain less than 100 Pa when all doors are closed .",
+    "entities": [
+      {"text": "protected", "label": "quality"},
+      {"text": "stairway", "label": "object"},
+      {"text": "pressure differential", "label": "property"},
+      {"text": "100 Pa", "label": "value"},
+      {"text": "doors", "label": "object"}
+    ],
+    "relations": [
+      {"head": "pressure differential", "tail": "100 Pa", "relation": "less"},
+      {"head": "pressure differential", "tail": "stairway", "relation": "part-of"},
+      {"head": "protected", "tail": "stairway", "relation": "selection"},
+      {"head": "doors", "tail": "stairway", "relation": "part-of"}
+    ]
+  },
+  {
+    "sentence": "No cavity barrier shall be installed with a gap exceeding 10 mm between the barrier and the adjacent masonry wall .",
+    "entities": [
+      {"text": "cavity barrier", "label": "object"},
+      {"text": "gap", "label": "property"},
+      {"text": "10 mm", "label": "value"},
+      {"text": "masonry wall", "label": "object"}
+    ],
+    "relations": [
+      {"head": "gap", "tail": "10 mm", "relation": "less-equal"},
+      {"head": "gap", "tail": "cavity barrier", "relation": "part-of"},
+      {"head": "cavity barrier", "tail": "masonry wall", "relation": "part-of"}
+    ]
+  },
+  {
+    "sentence": "Unless fitted with a self-closing device , a fire door shall have a leaf weight below 25 kg in accessible buildings .",
+    "entities": [
+      {"text": "self-closing device", "label": "object"},
+      {"text": "fire door", "label": "object"},
+      {"text": "leaf weight", "label": "property"},
+      {"text": "25 kg", "label": "value"},
+      {"text": "accessible", "label": "quality"},
+      {"text": "buildings", "label": "object"}
+    ],
+    "relations": [
+      {"head": "leaf weight", "tail": "25 kg", "relation": "less"},
+      {"head": "leaf weight", "tail": "fire door", "relation": "part-of"},
+      {"head": "fire door", "tail": "self-closing device", "relation": "necessity"},
+      {"head": "accessible", "tail": "buildings", "relation": "selection"}
+    ]
+  }
+]

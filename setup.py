@@ -28,7 +28,7 @@ setup(
         "matplotlib",
         "openpyxl",
         "nltk",
-        "transformers==4.40.2",
+        "transformers>=4.40.2",
         "seqeval",
         "tensorboardX",
         "wandb",
