@@ -262,3 +262,22 @@ cython_debug/
 #.idea/
 
 /test/
+
+# Local utility & dumps
+*.rar
+Graph.gv
+
+# Model weights and checkpoint states
+*.pt
+*.bin
+*.pth
+*.safetensors
+accord_nlp/models/
+
+# Training telemetry & caches
+wandb/
+runs/
+temp/
+outputs/best_model/
+outputs/gliner_ner/checkpoint-*/
+outputs/grid/**/checkpoint-*/

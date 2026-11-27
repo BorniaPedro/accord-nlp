@@ -1,0 +1,4 @@
+Micro F1: 0.1695
+Macro F1: 0.2188
+Macro Precision: 0.1516
+Macro Recall: 0.5202
