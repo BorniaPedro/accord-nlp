@@ -1,15 +1,19 @@
+# Core Deep Learning & GLiNER-ReLEx (install PyTorch for your CUDA/CPU platform first: https://pytorch.org/)
+gliner>=0.2.13
+transformers>=4.40.2
+huggingface-hub>=0.23.0
+sentencepiece
+
+# Data Processing, Evaluation & Visualization
+numpy
+pandas
 scikit-learn
 statsmodels
-matplotlib
 openpyxl
 nltk
-# nltk.download('punkt')
-# nltk.download('averaged_perceptron_tagger')
-# PyTorch - https://pytorch.org/get-started/locally/
-# transformers==4.16.2
-transformers==4.40.2
 seqeval
+tqdm
+matplotlib
+networkx
 tensorboardX
 wandb
-sentencepiece
-# graphviz - conda install -c anaconda graphviz (https://anaconda.org/anaconda/graphviz)

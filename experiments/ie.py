@@ -168,7 +168,7 @@ if __name__ == '__main__':
                 if g_rel in fn_by_class:
                     fn_by_class[g_rel] += 1
 
-    # 5. Metrics calculation and consolidation
+    # Metrics calculation and consolidation
     total_tp = sum(tp_by_class.values())
     total_fp = sum(fp_by_class.values())
     total_fn = sum(fn_by_class.values())

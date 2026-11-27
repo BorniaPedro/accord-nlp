@@ -278,6 +278,9 @@ accord_nlp/models/
 wandb/
 runs/
 temp/
-outputs/best_model/
-outputs/gliner_ner/checkpoint-*/
-outputs/grid/**/checkpoint-*/
+
+# Ignore everything inside outputs/ by default, except official benchmark results
+outputs/*
+!outputs/benchmark_results_full_grid.csv
+!outputs/per_class_results_seed42.json
+!outputs/ie_baseline_test_eval.txt
