@@ -1,147 +1,112 @@
-# ACCORD-NLP Framework
+# ACCORD-NLP: Joint Regulatory Rule Extraction with GLiNER-ReLEx
 
-ACCORD-NLP is a Natural Language Processing (NLP) framework developed as a part of the Horizon European project for  Automated Compliance Checks for Construction, Renovation or Demolition Works ([ACCORD](https://accordproject.eu/)) to facilitate Automated Compliance Checking (ACC) within the Architecture, Engineering, and Construction (AEC) sector.
+Extension of the [ACCORD-NLP](https://github.com/Accord-Project/accord-nlp) framework to perform **single-pass joint Named Entity Recognition (NER) and Relation Extraction (RE)** on building regulations from the **CODE-ACCORD** corpus.
 
-Compliance checking plays a pivotal role in the AEC sector, ensuring the safety, reliability, stability, and usability of building designs. Traditionally, this process relied on manual approaches, which are resource-intensive and time-consuming. Thus, attention has shifted towards automated methods to streamline compliance checks. Automating these processes necessitates the transformation of building regulations written in text aiming domain experts into machine-processable formats. However, this has been challenging, primarily due to the inherent complexities and unstructured nature of natural languages. Moreover, regulatory texts often exhibit domain-specific characteristics, ambiguities, and intricate clausal structures, further complicating the task.
+Instead of relying on traditional cascading sequence-labeling pipelines (two separate `RoBERTa-large` models), this work adapts the span-based **GLiNER-ReLEx** (`DeBERTa-v3 Large` backbone) architecture combined with **Teacher-Student synthetic data augmentation** generated via **Gemini 3.1 Pro**, achieving over **+35 percentage points** improvement in end-to-end Strict Relation Macro-F1.
 
-ACCORD-NLP offers data, AI models and workflows developed using state-of-the-art NLP techniques to extract rules from textual data, supporting ACC.
+---
 
-## Installation <a name="installation"> </a>
+## Pre-trained Models (Hugging Face Hub)
 
-As the initial step, Pytorch needs to be installed. The recommended Pytorch version is 2.0.1. Please refer to [PyTorch](https://pytorch.org/get-started/locally/#start-locally) 
-installation page for the specific installation command for your platform.
+Both optimized checkpoints (`seed=42`, selected via validation Strict RE Macro-F1 across a 216-configuration grid search) are publicly available:
 
-Once PyTorch has been installed, accord-nlp can be installed either from the source or as a Python package via pip. 
-The latter approach is recommended. 
+| Model Variant | Training Set | Strict RE Macro-F1 | Relaxed RE Macro-F1 | Hugging Face Checkpoint |
+| :--- | :--- | :---: | :---: | :--- |
+| **2x RoBERTa-large** (Baseline Cascade) | 620 sentences | 21.88% | — | `ACCORD-NLP/*` |
+| **GLiNER-ReLEx (`Standard`)** | 620 sentences | **58.08%** | 67.23% | [`bornia/gliner-relex-code-accord-standard`](https://huggingface.co/bornia/gliner-relex-code-accord-standard) |
+| **GLiNER-ReLEx (`Augmented`)** | 1,220 sentences | 57.67% | **69.40%** | [`bornia/gliner-relex-code-accord-augmented`](https://huggingface.co/bornia/gliner-relex-code-accord-augmented) |
 
-### From Source
-```
-git clone https://github.com/Accord-Project/accord-nlp.git
+---
+
+## Setup
+
+1. Install [PyTorch](https://pytorch.org/get-started/locally/) matching your CUDA/ROCm/CPU platform.
+2. Clone this repository and install the remaining dependencies:
+
+```bash
+git clone https://github.com/BorniaPedro/accord-nlp.git
 cd accord-nlp
 pip install -r requirements.txt
 ```
 
-### From pip
-```
-pip install accord-nlp
-```
+---
 
-## Features
-1. [Data Augmentation](#da)
-2. [Entity Classification](#ner)
-3. [Relation Classification](#re)
-4. [Information Extraction](#ie)
+## Repository Structure
 
-### Data Augmentation <a name="da"> </a>
-
-Data augmentation supports the synthetic oversampling of relation-annotated data within a domain-specific context. It can be used using the following code. The original experiment script is available [here](https://github.com/Accord-Project/accord-nlp/blob/main/experiments/data_augmentation/da_experiment.py).
-
-```python
-from accord_nlp.data_augmentation import RelationDA
-
-entities = ['object', 'property', 'quality', 'value']
-rda = RelationDA(entity_categories=entities)
-
-relations_path = '<.csv file path to original relation-annotated data>'
-entities_path = '<.csv file path to entity samples per category>'
-output_path = '<.csv file path to save newly created data>'
-rda.replace_entities(relations_path, entities_path, output_path, n=12)
+```text
+├── accord_nlp/                         # Original ACCORD-NLP cascading baseline package
+├── data/
+│   └── relex/
+│       ├── relex_train.json            # Original CODE-ACCORD train split (620 sentences)
+│       ├── relex_train_augmented.json  # Augmented train split (620 original + 600 synthetic)
+│       ├── relex_val.json              # Validation split (used for grid-search selection)
+│       └── relex_test.json             # Isolated test split (173 sentences)
+└── experiments/
+    ├── ie.py                           # End-to-end baseline evaluation script
+    └── relex/
+        ├── augment_relex.py            # Synthetic batch validation, span alignment & merging
+        ├── train_relex.py              # Single-pass fine-tuning + Strict & Relaxed evaluation
+        ├── run_grid_relex.py           # Full 216-run grid search or final winners reproduction
+        └── infer_relex.py              # Single-sentence inference & graph visualization
 ```
 
-#### Available Datasets
+---
 
-The data augmentation approach was applied to the relation-annotated training data in the [CODE-ACCORD](https://github.com/Accord-Project/CODE-ACCORD) corpus. It generated 2,912 synthetic data samples, resulting in a training set of 6,375 relations. Our paper, listed below, provides more details about the data statistics.
+## Usage & Reproducibility
 
-The augmented training dataset can be loaded into a Pandas DataFrame using the following code.
+### 1. Run Inference & Generate Knowledge Graphs
+Edit `SENTENCES` in `experiments/relex/infer_relex.py` and run:
 
-```python
-from datasets import Dataset
-from datasets import load_dataset
+```bash
+python -m experiments.relex.infer_relex
+```
+Downloads the fine-tuned checkpoint from Hugging Face, prints extracted entities and relational triples to the terminal, and saves directed graph plots to `outputs/inference_graphs/`.
 
-data_files = {"augmented_train": "augmented.csv"}
-augmented_train = Dataset.to_pandas(load_dataset("ACCORD-NLP/CODE-ACCORD-Relations", data_files=data_files, split="augmented_train"))
+### 2. Reproduce Thesis Results (Final Winners)
+Train and evaluate the two winning configurations (`Standard` and `Augmented`) on the isolated test split (`data/relex/relex_test.json`) with `seed=42`:
+
+```bash
+python -m experiments.relex.run_grid_relex --final_only
+```
+Outputs generated in `outputs/`:
+* `per_class_results_seed42.json`: Strict and Boundary-Relaxed Precision, Recall, and F1-scores per entity and relation class.
+* `final_models/<scenario>/test_predictions.json`: Sentence-by-sentence gold vs. predicted entities and triples for qualitative error analysis.
+
+### 3. Run the Full Hyperparameter Grid Search (216 Configurations)
+
+```bash
+python -m experiments.relex.run_grid_relex
 ```
 
-### Entity Classification <a name="ner"> </a>
+### 4. Custom Training
+Run `train_relex.py` directly to fine-tune with custom hyperparameters:
 
-We adapted the transformer's sequence labelling architecture to fine-tune the entity classifier, following its remarkable results in the NLP domain. The general transformer architecture was modified by adding individual softmax layers per output token to support entity classification. 
-
-Our paper, listed below, provides more details about the model architecture, fine-tuning process, experiments and evaluations. 
-
-#### Available Models
-
-We fine-tuned four pre-trained transformer models (i.e. BERT, ELECTRA, ALBERT and ROBERTA) for entity classification.
-All the fine-tuned models are available in [HuggingFace](https://huggingface.co/ACCORD-NLP), and can be accessed using the following code.
-
-```python
-from accord_nlp.text_classification.ner.ner_model import NERModel
-
-model = NERModel('roberta', 'ACCORD-NLP/ner-roberta-large')
-predictions, raw_outputs = model.predict(['The gradient of the passageway should not exceed five per cent.'])
-print(predictions)
+```bash
+python -m experiments.relex.train_relex \
+  --model_path knowledgator/gliner-relex-large-v0.5 \
+  --train_path data/relex/relex_train_augmented.json \
+  --epochs 10 --batch_size 16 --lr 3e-5 --others_lr 5e-5 \
+  --ner_thresholds 0.40 --rel_thresholds 0.60 \
+  --fp16 --save_predictions --augmented_data
 ```
 
-### Relation Classification <a name="re"> </a>
+### 5. Validate & Merge New Synthetic Batches
+To validate character offsets and token alignments of new LLM-generated JSON batches and merge them with the original training set:
 
-Relation classification aims to predict the semantic relationship between two entities within a context. We introduced four special tokens (i.e. \<e1>, \</e1>, \<e2> and \</e2>) to format the input text with an entity pair to facilitate relation classification. Both \<e1> and \</e1> mark the start and end of the first entity in the selected text sequence, while \<e2> and \</e2> mark the start and end of the second entity. The transformer output corresponds to \<e1> and \<e2> were passed through a softmax layer to predict the relation category. 
-
-Our paper, listed below, provides more details about the model architecture, fine-tuning process, experiments and evaluations.
-
-#### Available Models
-
-We fine-tuned three pre-trained transformer models (i.e. BERT, ALBERT and ROBERTA) for relation classification. 
-All the fine-tuned models are available in [HuggingFace](https://huggingface.co/ACCORD-NLP), and can be accessed using the following code.
-
-```python
-from accord_nlp.text_classification.relation_extraction.re_model import REModel
-
-model = REModel('roberta', 'ACCORD-NLP/re-roberta-large')
-predictions, raw_outputs = model.predict(['The <e1>gradient<\e1> of the passageway should not exceed <e2>five per cent</e2>.'])
-print(predictions)
+```bash
+python -m experiments.relex.augment_relex \
+  --synthetic_raw data/relex/synthetic_raw_600.json \
+  --train_path data/relex/relex_train.json \
+  --output_path data/relex/relex_train_augmented.json
 ```
 
-### Information Extraction <a name="ie"> </a>
+---
 
-Our information extraction pipeline aims to transform a regulatory sentence into a machine-processable output (i.e., a knowledge graph of entities and relations). It utilises the entity and relation classifiers mentioned above to sequentially extract information from the text to build the final graph. 
+## Acknowledgments & Base Framework Citation
 
-Our paper, listed below, provides more details about the pipeline, including its individual components. 
+This codebase builds upon the open-source **ACCORD-NLP** framework developed under the Horizon Europe ACCORD project. The original cascading NER + RE pipeline (`accord_nlp/`) and evaluation utilities remain intact for baseline reproducibility.
 
-
-The default pipeline configurations are set to the best-performed entity and relation classification models, and the 
-default pipeline can be accessed using the following code.
-
-```python
-from accord_nlp.information_extraction.ie_pipeline import InformationExtractor
-
-sentence = 'The gradient of the passageway should not exceed five per cent.'
-
-ie = InformationExtractor()
-ie.sentence_to_graph(sentence)
-```
-
-The following code can be used to access the pipeline with different configurations. Please refer to the [ie_pipeline.py](https://github.com/Accord-Project/accord-nlp/blob/main/accord_nlp/information_extraction/ie_pipeline.py) 
-for more details about the input parameters. 
-
-```python
-from accord_nlp.information_extraction.ie_pipeline import InformationExtractor
-
-sentence = 'The gradient of the passageway should not exceed five per cent.'
-
-ner_model_info = ('roberta', 'ACCORD-NLP/ner-roberta-large')
-re_model_info = ('roberta', 'ACCORD-NLP/re-roberta-large')
-ie = InformationExtractor(ner_model_info=ner_model_info, re_model_info=re_model_info, debug=True)
-ie.sentence_to_graph(sentence)
-
-```
-
-Also, a live demo of the Information Extractor is available in [HuggingFace](https://huggingface.co/spaces/ACCORD-NLP/information-extractor). 
-
-
-## Reference
-
-If you found the ACCORD-NLP framework useful in your research, please consider citing:
-
-```
+```bibtex
 @article{hettiarachchi-etal-2026-snowtec,
   title={{SNOWTEC}: Synthetic Natural language Oversampling With Transformer-based information ExtraCtion for automated compliance checking},
   author={Hettiarachchi, Hansi and Gaber, Mohamed Medhat and Parsafard, Pouyan and Vakaj, Edlira},
@@ -154,6 +119,3 @@ If you found the ACCORD-NLP framework useful in your research, please consider c
   publisher={Elsevier}
 }
 ```
-
-
-

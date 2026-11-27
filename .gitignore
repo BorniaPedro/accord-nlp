@@ -262,3 +262,27 @@ cython_debug/
 #.idea/
 
 /test/
+
+# Local utility & dumps
+*.rar
+Graph.gv
+
+# Model weights and checkpoint states
+*.pt
+*.bin
+*.pth
+*.safetensors
+*.model
+models/
+accord_nlp/models/
+
+# Training telemetry & caches
+wandb/
+runs/
+temp/
+
+# Ignore everything inside outputs/ by default, except official benchmark results
+outputs/*
+!outputs/benchmark_results_full_grid.csv
+!outputs/per_class_results_seed42.json
+!outputs/ie_baseline_test_eval.txt
