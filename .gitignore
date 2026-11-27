@@ -272,6 +272,8 @@ Graph.gv
 *.bin
 *.pth
 *.safetensors
+*.model
+models/
 accord_nlp/models/
 
 # Training telemetry & caches
